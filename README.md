@@ -1,176 +1,64 @@
-﻿![](docs/images/Aspose.Words.0cab1afa-6ae7-4203-a50b-990a9250dac3.001.png)
+﻿### Description
 
-Sintezator de culoare-sonor![](docs/images/Aspose.Words.0cab1afa-6ae7-4203-a50b-990a9250dac3.002.png)
+This project consists of a device that can play colors as sounds, based on a color sensor and a passive buzzer. The range of colors can be selected through an Android application, which communicates with the development board via Bluetooth module. The color perceived by the sensor is displayed on a screen.
 
-Proiectare cu Microprocesoare![](docs/images/Aspose.Words.0cab1afa-6ae7-4203-a50b-990a9250dac3.003.png)
+### Components Used
 
-Autor: Isac Sergiu Ionut Grupa: 30237
+The **Arduino Mega 2560** is the development board through which all the components used in this project were connected, providing everything needed for implementation.
 
-Facultatea de Automatica
+![com (3).jpg](media%2Fcom%20%283%29.jpg)
 
-si Calculatoare
+The **TCS230 Color Sensor** is the foundation of this project. Through this sensor, the intensity of each color was determined, converting the wavelength of the color into a square wave signal of a certain frequency. The *MD_TCS230.h* and *FreqCount.h* libraries were used for data reading.
 
-11 Ianuarie 2024
+![com (5).jpg](media%2Fcom%20%285%29.jpg)
 
-Cuprins
+The **ST7735 Display** communicates via SPI, displaying data from the buffer on a 128x120 pixel screen, with the help of the *Adafruit_ST7735.h* and *Adafruit_GFX.h* libraries.
 
-[1 Descriere ](#_page2_x70.87_y70.87). . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2
+![com (2).jpg](media%2Fcom%20%282%29.jpg)
 
-1\.1 Componente folosite . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2
+A **Passive Buzzer** was used to play the frequency associated with a color. Since the *FreqCount.h* library interferes with the *tone()* function, other libraries were used for sound playback: *TimerFreeTone.h* and *toneAC.h*.
 
-[2 Functionalitati ](#_page4_x70.87_y252.28). . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4 [3 Convertire RGB ](#_page4_x70.87_y673.89). . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4 [4 Schema electrica a componentelor ](#_page6_x70.87_y70.87). . . . . . . . . . . . . . . . . . . . . . . . . . . 6 [5 Biografie ](#_page6_x70.87_y475.20). . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6
+![com (1).jpg](media%2Fcom%20%281%29.jpg)
 
-1  Descriere
+The **HC-05 Bluetooth Module** was used for communication with the Bluetooth application, with the received data being read from the serial.
 
-<a name="_page2_x70.87_y70.87"></a>Acest proiect consta intr-un dispozitiv care poate reda culorile sub forma de sunete, bazandu- se pe un senzor de culoare si un buzzer pasiv. Aria de culori pot fi selectate prin intermediul unei aplicatii Android, care la randul ei comunica cu placa de dezvoltare prin modulul bluetooth. Culoare care este perceputa de senzor este redata pe un display.
+![com (4).jpg](media%2Fcom%20%284%29.jpg)
 
-<a name="_page2_x70.87_y169.45"></a>1.1 Componente folosite
+A **Breadboard** was used for placing the presented components.
 
-Arduino Mega 2560 este placa de dezvoltare prin care au fost conectate toate componentele folosite la acest proiect, prezentandu-se tot ce am avut nevoie pentru implementare.
+![Breadboard](media/bb.jpg)
 
-![](docs/images/Aspose.Words.0cab1afa-6ae7-4203-a50b-990a9250dac3.004.png)
+### Functionalities
 
-Figura 1: Placa de dezvolatare
+**Color Selection**
 
-Senzorul de Culoare TCS230 este baza acestui proiect. Prin acesta a fost determinata intensitate fiecarei culori, convertand lungimea de unda a culorii intr-un semnal dreptunghiu-
+Some users may not be interested in all available colors, so through the Bluetooth application, they can select the range of colors that can be played through the buzzer.
 
-lar de o anumita frecventa. Pentru citirea datelor au fost folosite librariile MD\_TCS230.h si FreqCount.h .
+![Bluetooth Application](media/ss.jpg)
+For usage, first of all, it is necessary to connect via Bluetooth to the **HC-05** module, then establish a connection with the application through *Connect device*.
 
-![](docs/images/Aspose.Words.0cab1afa-6ae7-4203-a50b-990a9250dac3.005.png)
+### RGB Conversion
 
-Figura 2: Placa de dezvolatare
+The data received from the color sensor is in the form of RGB, components of a color. To play it as sound, this value was converted to wavelength using the following method:
 
-Display ST7735 prezinta o comunicare SPI, afisand date din buffer pe un ecran de 128x120 pixeli, cu ajutorul librariilor Adafruit\_ST7735.h si Adafruit\_GFX.h .
+1. First, the RGB value was converted to HUE, in order to convert 3 values into one.
 
-![](docs/images/Aspose.Words.0cab1afa-6ae7-4203-a50b-990a9250dac3.006.png)
+    ![Hue](media/hue.png)
 
-Figura 3: Display SPI
+2. The HUE value was then converted to wavelength according to the formula:
 
-Buzzer pasiv a fost folosit pentru redare frecventei asosciate unei culori. Libraria FreqCo- unt.h interfera cu functia tone() , de accea am folosit alte librarii pentru readarea sunetului : TimerFreeTone.h si toneAC.h .
+   ![Tex2Img_1711660944.jpg](media%2FTex2Img_1711660944.jpg)
+### Electrical Schematic of Components
 
-![](docs/images/Aspose.Words.0cab1afa-6ae7-4203-a50b-990a9250dac3.007.png)
+![Schematic](media/ff.png)
 
-Figura 4: Buzzer pasiv
+### References
 
-Modul Bluetooth HC-05 folosit pentru comunicarea cu aplicatia Bluetooth, urmand ca datele primite sa fie citite de pe serial.
-
-![](docs/images/Aspose.Words.0cab1afa-6ae7-4203-a50b-990a9250dac3.008.png)
-
-Figura 5: Modul Bluetooth
-
-Breadboard folosit pentru plasarea componentelor prezentate.
-
-![](docs/images/Aspose.Words.0cab1afa-6ae7-4203-a50b-990a9250dac3.009.png)
-
-Figura 6: Breadboard
-
-2  Functionalitati
-
-<a name="_page4_x70.87_y252.28"></a>Selectare culorilor
-
-Posibil ca unii utilizatorii sa nu fie interesati toate culorile disponibile, de accea, prin inter- mediul aplicatie Bluetooth, acestia isi pot alege gama de culori ca se pot reda prin buzzer.
-
-![](docs/images/Aspose.Words.0cab1afa-6ae7-4203-a50b-990a9250dac3.010.jpeg)
-
-Figura 7: Aplicatia Bluetooth
-
-Pentru utilizare, intai de toate, este necesara conectare prin Bluetooth la modulul HC-05 , apoi legarea acestuia cu aplicatia prin Connect device .
-
-3  Convertire<a name="_page4_x70.87_y673.89"></a> RGB
-
-Datele primite de la sezorul de culorare sunt de forma RGB, componente ale unei culori. Pentru redarea sub forma de sunet aceasta valoare a fost convertita la lungime de unda, prin urmatoarea metoda:
-
-1. Intai a fost convertita voloara RGB la HUE, pentru a converti 3 valori intr-una.
-
-![](docs/images/Aspose.Words.0cab1afa-6ae7-4203-a50b-990a9250dac3.011.png)
-
-Figura 8: Hue
-
-2. Valoare HUE a fost ulterior convertita la lungime de unda ( λ) conform formulei:
-
-λ = λmax − λrange ∗HUE
-
-huemax
-
-Lungimea de unda a fost folosita pentru a determina intervalele pentru fiecare culoare dispo-
-
-nibila.
-
-1 float rgbToWavelenght(int r, int g, int b){
-
-2 float R = r / 255.0;
-
-3 float G = g / 255.0;
-
-4 float B = b / 255.0;
-
-5
-
-6
-
-7 // rgb to hue
-
-8 float hue;
-
-9 float maxV = max(R, max(G,B));
-
-10 float minV = min(R, min(G,B));
-
-11
-
-12 if(maxV == R)
-
-13 hue = (G-B)/(maxV-minV);
-
-14
-
-15 if(maxV == G)
-
-16 hue = 2.0 + (B-R)/(maxV-minV);
-
-17
-
-18 if(maxV == B)
-
-19 hue = 4.0 + (R-G)/(maxV-minV);
-
-20
-
-21 hue \*= 60.0;
-
-22 if(hue < 0.0)
-
-23 hue += 360.0;
-
-24
-
-25 // hue to waveleght
-
-26
-
-27 // waveleght -> [400, 700]
-
-28 // hue -> [0, 270]
-
-29 float wavelenght = 700 - (300/270 \* hue); 30
-
-31 return wavelenght;
-
-32
-
-33 }
-
-4  Schema<a name="_page6_x70.87_y70.87"></a> electrica a componentelor![](docs/images/Aspose.Words.0cab1afa-6ae7-4203-a50b-990a9250dac3.012.png)
-
-Figura 9: Schema
-
-5  Biografie
-- <a name="_page6_x70.87_y475.20"></a>MD\_TCS23
-- FreqCount
-- ST7735
-- TimerFreeTone
-- Color to Sound
-- RGB to HUE
-- Wavelenght from HUE
-- Wavelenght to Color
-6
+- [MD_TCS23](https://github.com/MajicDesigns/MD_TCS23)
+- [FreqCount](https://www.arduino.cc/reference/en/libraries/freqcount/)
+- [ST7735](https://github.com/adafruit/Adafruit-ST7735-Library)
+- [TimerFreeTone](https://github.com/pakozm/TinyMusic/blob/master/KeyChainPlayer/TimerFreeTone.cpp)
+- [Color to Sound](https://www.flutopedia.com/sound_color.htm)
+- [RGB to HUE](https://stackoverflow.com/questions/23090019/fastest-formula-to-get-hue-from-rgb#:~:text=The%20three%20different%20formulas%20are,(R%2DG)%2F(max%2Dmin))
+- [Wavelength from HUE](https://stackoverflow.com/questions/11850105/hue-to-wavelength-mapping/11857601#11857601)
+- [Wavelength to Color](https://405nm.com/wavelength-to-color/)
