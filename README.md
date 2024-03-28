@@ -35,6 +35,7 @@ A **Breadboard** was used for placing the presented components.
 Some users may not be interested in all available colors, so through the Bluetooth application, they can select the range of colors that can be played through the buzzer.
 
 ![Bluetooth Application](media/ss.jpg)
+
 For usage, first of all, it is necessary to connect via Bluetooth to the **HC-05** module, then establish a connection with the application through *Connect device*.
 
 ### RGB Conversion
